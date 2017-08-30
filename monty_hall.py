@@ -31,6 +31,14 @@ def return_count(population):
     return {'0': a, '1': b, '2': c, 'total': a + b + c}
 
 
+# generates random int excluding 3rd arg
+def reveal_false_option(min, max, exclude):
+    int_to_return = exclude
+    while int_to_return == exclude:
+        int_to_return = r.randint(min, max)
+    return int_to_return
+
+
 # takes initial pop and bool for changing guess on second round. Creates a new population of final guesses.
 def second_guess(population, change_bool):
     # array to be returned
@@ -39,10 +47,12 @@ def second_guess(population, change_bool):
     for i in population:
         # if meant to change
         if change_bool:
+            # initiate new guess as the first guess
             new_guess = i
             # will continue generating new guesses until it doesn't match first guess. Simulates
             # changing mind while preserving randomness of second guess.
             while new_guess == i:
+                new_guess = reveal_false_option(0, 2, i)
                 new_guess = r.randint(0, 2)
             population_2.append(new_guess)
         # will result in identical array returned
